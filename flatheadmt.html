@@ -5,19 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="m-0">
 
+  <!-- Fullscreen background -->
   <div
-    class="w-screen h-screen bg-center bg-no-repeat bg-cover"
+    class="fixed inset-0 bg-cover bg-center -z-10"
     style="background-image: url('./images/main.png');"
+  ></div>
+
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-20">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center gap-8">
+      
+      <button
+        class="nav-btn flex items-center gap-1 font-medium text-gray-800"
+        data-menu="menu1"
+      >
+        Menu One
+        <span class="arrow transition-transform duration-300">▼</span>
+      </button>
+
+      <button
+        class="nav-btn flex items-center gap-1 font-medium text-gray-800"
+        data-menu="menu2"
+      >
+        Menu Two
+        <span class="arrow transition-transform duration-300">▼</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Slide Panel -->
+  <div
+    id="panel"
+    class="fixed top-16 left-0 w-full h-1/2 bg-white shadow-lg transform -translate-y-full transition-transform duration-300 z-10"
   >
-    <!-- Optional overlay content -->
-    <div class="w-full h-full flex items-center justify-center">
-      <h1 class="text-white text-4xl font-bold drop-shadow-lg">
-        Fullscreen Background
-      </h1>
+    <div class="p-8">
+      <h2 class="text-2xl font-semibold mb-4">Panel Content</h2>
+      <p class="text-gray-600">
+        This panel occupies half the viewport height and matches the navbar background.
+      </p>
     </div>
   </div>
+
+  <!-- Spacer to allow scrolling if needed -->
+  <div class="h-screen"></div>
+
+  <script>
+    const buttons = document.querySelectorAll('.nav-btn');
+    const panel = document.getElementById('panel');
+    let openMenu = null;
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const arrow = btn.querySelector('.arrow');
+
+        if (openMenu === btn) {
+          // Close current
+          panel.classList.add('-translate-y-full');
+          arrow.classList.remove('rotate-180');
+          openMenu = null;
+        } else {
+          // Close others
+          buttons.forEach(b => {
+            b.querySelector('.arrow').classList.remove('rotate-180');
+          });
+
+          // Open new
+          panel.classList.remove('-translate-y-full');
+          arrow.classList.add('rotate-180');
+          openMenu = btn;
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
