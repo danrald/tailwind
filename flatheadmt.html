@@ -11,72 +11,110 @@
   <!-- Fullscreen background -->
   <div
     class="fixed inset-0 bg-cover bg-center -z-10"
-    style="background-image: url('./images/main.png');"
+    style="background-image: url('your-image.jpg');"
   ></div>
 
   <!-- Navigation Bar -->
   <nav class="fixed top-0 left-0 w-full bg-white shadow z-20">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center gap-8">
-      
+
+      <!-- Menu Item 1 -->
       <button
         class="nav-btn flex items-center gap-1 font-medium text-gray-800"
-        data-menu="menu1"
+        data-target="panel-1"
       >
         Menu One
         <span class="arrow transition-transform duration-300">▼</span>
       </button>
 
+      <!-- Menu Item 2 -->
       <button
         class="nav-btn flex items-center gap-1 font-medium text-gray-800"
-        data-menu="menu2"
+        data-target="panel-2"
       >
         Menu Two
+        <span class="arrow transition-transform duration-300">▼</span>
+      </button>
+
+      <!-- Menu Item 3 -->
+      <button
+        class="nav-btn flex items-center gap-1 font-medium text-gray-800"
+        data-target="panel-3"
+      >
+        Menu Three
         <span class="arrow transition-transform duration-300">▼</span>
       </button>
 
     </div>
   </nav>
 
-  <!-- Slide Panel -->
-  <div
-    id="panel"
-    class="fixed top-16 left-0 w-full h-1/2 bg-white shadow-lg transform -translate-y-full transition-transform duration-300 z-10"
+  <!-- Panels -->
+  <section
+    id="panel-1"
+    class="panel fixed top-16 left-0 w-full h-1/2 bg-white shadow-lg transform -translate-y-full transition-transform duration-300 z-10"
   >
     <div class="p-8">
-      <h2 class="text-2xl font-semibold mb-4">Panel Content</h2>
-      <p class="text-gray-600">
-        This panel occupies half the viewport height and matches the navbar background.
-      </p>
+      <h2 class="text-2xl font-semibold mb-4">Menu One Content</h2>
+      <p class="text-gray-600">Panel for Menu One.</p>
     </div>
-  </div>
+  </section>
 
-  <!-- Spacer to allow scrolling if needed -->
+  <section
+    id="panel-2"
+    class="panel fixed top-16 left-0 w-full h-1/2 bg-white shadow-lg transform -translate-y-full transition-transform duration-300 z-10"
+  >
+    <div class="p-8">
+      <h2 class="text-2xl font-semibold mb-4">Menu Two Content</h2>
+      <p class="text-gray-600">Panel for Menu Two.</p>
+    </div>
+  </section>
+
+  <section
+    id="panel-3"
+    class="panel fixed top-16 left-0 w-full h-1/2 bg-white shadow-lg transform -translate-y-full transition-transform duration-300 z-10"
+  >
+    <div class="p-8">
+      <h2 class="text-2xl font-semibold mb-4">Menu Three Content</h2>
+      <p class="text-gray-600">Panel for Menu Three.</p>
+    </div>
+  </section>
+
+  <!-- Spacer -->
   <div class="h-screen"></div>
 
+  <!-- JS -->
   <script>
     const buttons = document.querySelectorAll('.nav-btn');
-    const panel = document.getElementById('panel');
-    let openMenu = null;
+    const panels = document.querySelectorAll('.panel');
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const arrow = btn.querySelector('.arrow');
+    let openPanel = null;
+    let openButton = null;
 
-        if (openMenu === btn) {
-          // Close current
-          panel.classList.add('-translate-y-full');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = button.dataset.target;
+        const targetPanel = document.getElementById(targetId);
+        const arrow = button.querySelector('.arrow');
+
+        // Close currently open panel
+        if (openPanel && openPanel !== targetPanel) {
+          openPanel.classList.add('-translate-y-full');
+          openButton.querySelector('.arrow').classList.remove('rotate-180');
+        }
+
+        // Toggle clicked panel
+        const isOpen = !targetPanel.classList.contains('-translate-y-full');
+
+        if (isOpen) {
+          targetPanel.classList.add('-translate-y-full');
           arrow.classList.remove('rotate-180');
-          openMenu = null;
+          openPanel = null;
+          openButton = null;
         } else {
-          // Close others
-          buttons.forEach(b => {
-            b.querySelector('.arrow').classList.remove('rotate-180');
-          });
-
-          // Open new
-          panel.classList.remove('-translate-y-full');
+          targetPanel.classList.remove('-translate-y-full');
           arrow.classList.add('rotate-180');
-          openMenu = btn;
+          openPanel = targetPanel;
+          openButton = button;
         }
       });
     });
