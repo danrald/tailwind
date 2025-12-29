@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./src/output.css" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-100">
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 z-40 flex h-16 w-full items-center justify-between bg-slate-100 px-4 shadow">
+  <span>Navbar</span>
+
+  <button
+    id="btnSidebarToggler"
+    aria-controls="sidebar"
+    aria-expanded="false"
+    class="text-xl"
+  >
+    ☰
+  </button>
+</nav>
+
+<!-- SIDEBAR -->
+<aside
+  id="sidebar"
+  class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-700 pt-6
+         transition-transform duration-300 ease-in-out
+         -translate-x-full"
+>
+  <div class="px-4 text-gray-100">Sidebar</div>
+</aside>
+
+<!-- MAIN -->
+<main
+  id="main"
+  class="pt-20 px-6 transition-all duration-300 ease-in-out"
+>
+  <p>Main content</p>
+</main>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const main = document.getElementById("main");
+  const btn = document.getElementById("btnSidebarToggler");
+
+  const desktopQuery = window.matchMedia("(min-width: 1024px)");
+
+  let sidebarOpen = true;
+
+  function applyLayout() {
+    if (sidebarOpen) {
+      // Desktop: sidebar always visible
+      sidebar.classList.remove("-translate-x-full");
+      main.classList.add("ml-64");
+
+      btn.setAttribute("aria-expanded", "true");
+    } else {
+      // Mobile: sidebar overlays content
+      sidebar.classList.toggle("-translate-x-full", !sidebarOpen);
+      main.classList.remove("ml-64");
+
+      btn.setAttribute("aria-expanded", sidebarOpen);
+    }
+  }
+
+  btn.addEventListener("click", () => {
+   // if (desktopQuery.matches) return;
+
+    sidebarOpen = !sidebarOpen;
+    applyLayout();
+  });
+
+  desktopQuery.addEventListener("change", applyLayout);
+
+  // Initial layout
+  applyLayout();
+</script>
+
+</body>
+</html>

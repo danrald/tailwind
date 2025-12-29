@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./src/output.css" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-100">
+
+<!-- NAVBAR -->
+<nav
+  id="navbar"
+  class="fixed top-0 z-40 flex w-full items-center justify-between bg-slate-100 px-4 h-16 shadow-sm"
+>
+  <nav aria-label="Breadcrumb" class="hidden sm:block">
+    <ol class="flex items-center text-lg">
+      <li><a href="#">Main</a></li>
+      <li class="mx-2 opacity-60">❯</li>
+      <li class="opacity-60">Homepage</li>
+    </ol>
+  </nav>
+
+  <button
+    id="btnSidebarToggler"
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="sidebar"
+    class="text-2xl"
+  >
+    <svg id="navClosed" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </svg>
+
+    <svg id="navOpen" xmlns="http://www.w3.org/2000/svg" class="hidden h-8 w-8" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+</nav>
+
+<!-- SIDEBAR -->
+<aside
+  id="sidebar"
+  class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-700 pt-6
+         -translate-x-full
+         transition-transform duration-300 ease-in-out
+         lg:translate-x-0"
+>
+  <div class="px-4">
+    <h3 class="mb-2 text-xs uppercase text-gray-400">Main</h3>
+    <ul>
+      <li>
+        <a class="block rounded py-2 px-3 text-gray-100 hover:bg-gray-600" href="#">
+          Homepage
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main
+  id="main"
+  class="pt-20 px-6
+         transition-all duration-300 ease-in-out
+         lg:ml-64"
+>
+  <h1 class="text-2xl font-semibold mb-4">Main Content</h1>
+  <p>
+    Resize the window or toggle the sidebar — this content
+    now animates smoothly.
+  </p>
+</main>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const main = document.getElementById("main");
+  const btn = document.getElementById("btnSidebarToggler");
+  const navClosed = document.getElementById("navClosed");
+  const navOpen = document.getElementById("navOpen");
+
+  btn.addEventListener("click", () => {
+    const isOpen = !sidebar.classList.contains("-translate-x-full");
+
+    sidebar.classList.toggle("-translate-x-full");
+    main.classList.toggle("ml-64");
+
+    btn.setAttribute("aria-expanded", !isOpen);
+
+    navClosed.classList.toggle("hidden");
+    navOpen.classList.toggle("hidden");
+  });
+</script>
+
+</body>
+</html>

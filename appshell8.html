@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./src/output.css" rel="stylesheet" />
+</head>
+
+<body class="bg-slate-100">
+
+<!-- SIDEBAR STATE -->
+<input
+  type="checkbox"
+  id="sidebar-toggle"
+  class="peer hidden"
+  
+/>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 z-40 flex h-16 w-full items-center justify-between bg-slate-100 px-4 shadow">
+  <span>Navbar</span>
+
+  <label
+    for="sidebar-toggle"
+    class="cursor-pointer text-xl select-none"
+    aria-label="Toggle sidebar"
+  >
+    ☰
+  </label>
+</nav>
+
+<!-- SIDEBAR -->
+<aside
+  id="sidebar"
+  class="   fixed top-16 left-0 z-40 h-full w-64
+    -translate-x-full
+    bg-gray-700 text-white
+    transition-transform duration-300
+    peer-checked:translate-x-0
+
+    lg:translate-x-0
+    lg:peer-checked:-translate-x-full
+>
+  <div class="px-4 text-gray-100 space-y-4">
+    <h3 class="text-xs uppercase text-gray-400">Main</h3>
+    <a href="#" class="block rounded px-3 py-2 hover:bg-gray-600">
+      Homepage
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main
+  id="main"
+  class="pt-16 transition-all duration-300
+    lg:ml-64
+    lg:peer-checked:ml-0"
+>
+  <h1 class="text-2xl font-semibold mb-4">Main Content</h1>
+  <p>
+    The sidebar now expands and collapses at <strong>all window sizes</strong>
+    using <strong>CSS only</strong>.
+  </p>
+</main>
+
+</body>
+</html>
